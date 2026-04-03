@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ghost Mode Simulator</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      background: #0f172a;
+      color: white;
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: #111827;
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 20px;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: none;
+    }
+
+    button {
+      background: #2563eb;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .secondary {
+      background: purple;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Ghost Mode Simulator</h1>
+
+<div class="card">
+  <h2>Trade Input</h2>
+
+  <label>Chain</label>
+  <select id="chain">
+    <option>Base</option>
+    <option>Ethereum</option>
+  </select>
+
+  <label>From Token</label>
+  <input id="from_token" value="USDC">
+
+  <label>To Token</label>
+  <input id="to_token" value="ETH">
+
+  <label>Amount</label>
+  <input id="amount" value="100">
+
+  <button onclick="analyze()">Simulate Trade</button>
+</div>
+
+<div id="result" class="card" style="display:none;">
+  <h2>Result</h2>
+
+  <p><b>Output:</b> <span id="out"></span></p>
+  <p><b>Slippage:</b> <span id="slip"></span></p>
+  <p><b>Verdict:</b> <span id="verdict"></span></p>
+
+  <h3>Risks</h3>
+  <ul id="risks"></ul>
+
+  <h3>Suggestions</h3>
+  <ul id="suggestions"></ul>
+</div>
+
+<!-- 🔥 EXECUTION BÖLÜMÜ -->
+<div class="card">
+  <h2>Execution</h2>
+
+  <button class="secondary" onclick="executeTrade()">
+    Execute Trade
+  </button>
+
+  <p id="exec_result"></p>
+</div>
+
+<script>
+
+async function analyze() {
+  let res = await fetch("/analyze", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      chain: document.getElementById("chain").value,
+      from_token: document.getElementById("from_token").value,
+      to_token: document.getElementById("to_token").value,
+      amount: parseFloat(document.getElementById("amount").value)
+    })
+  });
+
+  let data = await res.json();
+
+  document.getElementById("result").style.display = "block";
+
+  document.getElementById("out").innerText = data.simulation.expected_output;
+  document.getElementById("slip").innerText = data.simulation.slippage + "%";
+  document.getElementById("verdict").innerText = data.analysis.verdict;
+
+  let risks = document.getElementById("risks");
+  risks.innerHTML = "";
+  data.analysis.risks.forEach(r => {
+    let li = document.createElement("li");
+    li.innerText = r;
+    risks.appendChild(li);
+  });
+
+  let sug = document.getElementById("suggestions");
+  sug.innerHTML = "";
+  data.analysis.suggestions.forEach(s => {
+    let li = document.createElement("li");
+    li.innerText = s;
+    sug.appendChild(li);
+  });
+}
+
+async function executeTrade() {
+  let res = await fetch("/execute", { method: "POST" });
+  let data = await res.json();
+
+  document.getElementById("exec_result").innerText = data.message;
+}
+
+</script>
+
+</body>
+</html>
