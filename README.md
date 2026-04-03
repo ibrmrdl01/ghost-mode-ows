@@ -43,10 +43,12 @@ Install dependencies:
 `bash
 pip install -r requirements.txt
 
-start the server 
+##start the server 
+
 python -m uvicorn app:app --reload
 
-Open in browser 
+##Open in browser 
+
 http://127.0.0.1:8000/
 
 ⚠️ Notes
