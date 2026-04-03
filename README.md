@@ -62,4 +62,4 @@ Live DEX routing
 Wallet connection
 Multi-chain support
 
-Built with ❤️ for @OpenWallet
+## Built with ❤️ for @OpenWallet
