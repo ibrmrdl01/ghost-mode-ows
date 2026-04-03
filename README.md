@@ -1,3 +1,6 @@
+## 🎥 Demo
+
+Video demo: (https://www.youtube.com/shorts/VK8Trtca480)
 # Ghost Mode 👻
 
 Ghost Mode is an AI-powered execution copilot for Web3 transactions.
