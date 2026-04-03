@@ -43,20 +43,20 @@ Install dependencies:
 `bash
 pip install -r requirements.txt
 
-##start the server 
+## start the server 
 
 python -m uvicorn app:app --reload
 
-##Open in browser 
+## Open in browser 
 
 http://127.0.0.1:8000/
 
-⚠️ Notes
+## ⚠️ Notes
 This is a demo / MVP
 Execution is simulated
 Built for the OpenWallet Hackathon
 
-🛠 Future Work
+## 🛠 Future Work
 Real OWS policy integration
 Live DEX routing
 Wallet connection
