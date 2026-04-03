@@ -53,9 +53,11 @@ http://127.0.0.1:8000/
 This is a demo / MVP
 Execution is simulated
 Built for the OpenWallet Hackathon
+
 🛠 Future Work
 Real OWS policy integration
 Live DEX routing
 Wallet connection
 Multi-chain support
+
 Built with ❤️ for @OpenWallet
